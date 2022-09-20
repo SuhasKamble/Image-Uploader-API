@@ -1,4 +1,6 @@
 const express = require("express");
+const cors = require("cors");
+const path = require("path");
 require("./db/conn");
 
 const app = express();
@@ -6,8 +8,12 @@ const port = 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
-app.get("", (req, res) => {
+const staticPath = path.join(__dirname, "./public");
+app.use(express.static(staticPath));
+
+app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
