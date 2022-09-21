@@ -12,6 +12,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const image = await Image.findById(req.params.id);
+    if (!image) {
+      res.status(404).json({ error: "Image does not exist" });
+      return;
+    }
+    res.status(200).json(image);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const { name, imageUrl, caption } = req.body;
